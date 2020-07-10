@@ -37,25 +37,25 @@ int main(int argc, char* argv[])
         api.create();
         
         // Generate sine wave data
-        const int N = 512;
+        const int N = 16;
         auto data = generateSignal(N);        
 
         // Add sine wave to the measurement
         std::string measurementName = "sineWave";
-        std::string columneNameSignal = "signal";
-        std::string columneNameSignalReversed = "signalReversed";
+        std::string columnNameSignal = "signal";
+        std::string columnNameSignalReversed = "signalReversed";
 
         for(int i = 0; i < N; i++) {            
             api.insert(line
-                (measurementName, key_value_pairs(), key_value_pairs(columneNameSignal, data[i]))
-                (measurementName, key_value_pairs(), key_value_pairs(columneNameSignalReversed, -data[i])));
+                (measurementName, key_value_pairs(), key_value_pairs(columnNameSignal, data[i]))
+                (measurementName, key_value_pairs(), key_value_pairs(columnNameSignalReversed, -data[i])));
         }
 
         // Delete signal
         delete data;
 
         // Query and display data from the database            
-        auto query = "SELECT " + columneNameSignalReversed + " FROM " + dbName + ".." + measurementName;        
+        auto query = "SELECT " + columnNameSignalReversed + " FROM " + dbName + ".." + measurementName;        
         std::cout << std::endl << db.get(query) << std::endl;
 
         // Drop database 
